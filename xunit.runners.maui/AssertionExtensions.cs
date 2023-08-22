@@ -24,7 +24,7 @@ namespace Xunit.Runners.Maui
 			var hasFlag = self.HasFlag(flag);
 
 			if (!hasFlag)
-				throw new ContainsException(flag, self);
-		}
-	}
+				Xunit.Sdk.ContainsException.ForKeyNotFound(flag.ToString(), self.ToString());
+        }
+    }
 }

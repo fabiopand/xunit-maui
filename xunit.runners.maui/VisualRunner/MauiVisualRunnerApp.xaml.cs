@@ -1,10 +1,11 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Maux;
+using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls;
 using Xunit.Runners.Maui.VisualRunner.Pages;
 
 namespace Xunit.Runners.Maui.VisualRunner
 {
-	partial class MauiVisualRunnerApp : Application
+	partial class MauiVisualRunnerApp: IMauxApplication
 	{
 		readonly TestOptions _options;
 		readonly ILogger _logger;

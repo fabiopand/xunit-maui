@@ -1,76 +1,65 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(ConfigsDir)\TargetMaui.props" />
 
-	<PropertyGroup>
-		<TargetFrameworks>net6.0;net6.0-android;net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net6.0-windows10.0.19041.0</TargetFrameworks>
-		<UseMaui>true</UseMaui>
-		<SingleProject>true</SingleProject>
-		<OutputType>Library</OutputType>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <Description>MAUI devices xunit runner</Description>
+    <Authors>xunit;Microsoft;aritchie</Authors>
+    <Owners>aritchie;shinylib</Owners>
 
-		<IsPackable>true</IsPackable>
-		<Description>MAUI devices xunit runner</Description>
-		<Authors>xunit;Microsoft;aritchie</Authors>
-		<Owners>aritchie;shinylib</Owners>
-	
-		<PackageId>Shiny.Xunit.Runners.Maui</PackageId>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageIcon>icon.png</PackageIcon>
-		<PackageTags>maui xunit testing tests</PackageTags>
-		<PackageReadmeFile>readme.md</PackageReadmeFile>
-		<PackageProjectUrl>https://github.com/shinyorg/xunit-maui</PackageProjectUrl>
-		<PackageReleaseNotes>https://github.com/shinyorg/xunit-maui</PackageReleaseNotes>
-		<RepositoryUrl>https://github.com/shinyorg/xunit-maui</RepositoryUrl>
-		<RepositoryType>git</RepositoryType>
-		
-		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>Shiny.Xunit.Runners.Maui</PackageId>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageTags>maui xunit testing tests</PackageTags>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <PackageProjectUrl>https://github.com/shinyorg/xunit-maui</PackageProjectUrl>
+    <PackageReleaseNotes>https://github.com/shinyorg/xunit-maui</PackageReleaseNotes>
+    <RepositoryUrl>https://github.com/shinyorg/xunit-maui</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
 
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
-		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
-	</PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
 
-	<PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
-		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
-	</PropertyGroup>
-	
-	<ItemGroup>
-		<EmbeddedResource Include="Assets\credits.html" />
-	</ItemGroup>
+  <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+  </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Nerdbank.GitVersioning" Version="3.5.107">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-		<PackageReference Include="xunit" Version="2.4.1" />
-		<PackageReference Include="xunit.runner.utility" Version="2.4.1" />
-		<!--<PackageReference Include="Microsoft.DotNet.XHarness.TestRunners.Xunit" Version="1.0.0-prerelease.21558.2" />-->
-	</ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\credits.html" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<None Include="$(MSBuildThisFileDirectory)..\nuget.png" Pack="true" PackagePath="icon.png" />
-		<None Include="$(MSBuildThisFileDirectory)..\readme.md" Pack="true" PackagePath="readme.md" />
-		<None Include="Platforms\**\*.cs" />
-		<Compile Remove="Platforms\**\*.cs" />
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Nerdbank.GitVersioning">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.utility" />
+  </ItemGroup>
 
-	<ItemGroup Condition="$(TargetFramework.Contains('windows'))">
-		<Compile Include="Platforms\Windows\**\*.cs" />
-	</ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)..\nuget.png" Pack="true" PackagePath="icon.png" />
+    <None Include="$(MSBuildThisFileDirectory)..\readme.md" Pack="true" PackagePath="readme.md" />
+    <None Include="Platforms\**\*.cs" />
+    <Compile Remove="Platforms\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(TargetFramework.Contains('windows'))">
+    <Compile Include="Platforms\Windows\**\*.cs" />
+  </ItemGroup>
 
 
-	<ItemGroup Condition="$(TargetFramework.Contains('android'))">
-		<Compile Include="Platforms\Android\**\*.cs" />
-	</ItemGroup>
+  <ItemGroup Condition="$(TargetFramework.Contains('android'))">
+    <Compile Include="Platforms\Android\**\*.cs" />
+  </ItemGroup>
 
-	<ItemGroup Condition="$(TargetFramework.Contains('ios')) OR $(TargetFramework.Contains('maccatalyst'))">
-		<Compile Include="Platforms\Apple\**\*.cs" />
-	</ItemGroup>
+  <ItemGroup Condition="$(TargetFramework.Contains('ios')) OR $(TargetFramework.Contains('maccatalyst'))">
+    <Compile Include="Platforms\Apple\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\maux\Maux.Mvvm\Maux.Mvvm.csproj" />
+  </ItemGroup>
 </Project>

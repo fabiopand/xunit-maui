@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Maux;
+using Microsoft.Extensions.Logging;
 //using Xunit.Runners.Maui.HeadlessRunner;
 using Xunit.Runners.Maui.VisualRunner;
 
@@ -23,9 +24,9 @@ namespace Xunit.Runners.Maui
 					svc.GetRequiredService<TestOptions>(),
 					svc.GetRequiredService<ILoggerFactory>().CreateLogger("TestRun")
 				);
-			});
+			}).UseMauxPageModel<MauiVisualRunnerApp>();
 
-			return appHostBuilder;
+            return appHostBuilder;
 		}
 
 //		public static MauiAppBuilder UseHeadlessRunner(this MauiAppBuilder appHostBuilder, HeadlessRunnerOptions options)
