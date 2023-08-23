@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(ConfigsDir)\TargetMaui.props" />
   <PropertyGroup>
-    <TargetFrameworks>$(TargetFrameworks);net8.0</TargetFrameworks>
     <OutputType>Library</OutputType>
     <Description>MAUI devices xunit runner</Description>
     <Authors>xunit;Microsoft;aritchie</Authors>
